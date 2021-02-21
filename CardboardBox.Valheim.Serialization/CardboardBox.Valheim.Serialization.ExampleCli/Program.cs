@@ -19,7 +19,6 @@ namespace CardboardBox.Valheim.Serialization.ExampleCli
 			var character = Serializer.Characters.Read(characterPath);
 			//Serialize the FCH file
 			Serializer.Characters.Write("test.fch", character);
-
 		}
 
 		public static string GetPath(string filename)
