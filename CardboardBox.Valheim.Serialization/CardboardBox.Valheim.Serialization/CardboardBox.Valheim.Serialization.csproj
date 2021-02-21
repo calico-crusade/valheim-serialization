@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Cardboard</Authors>
+    <Product />
+    <Description>A library used for reading and writing the Valheim Save files</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/calico-crusade/valheim-serialization</PackageProjectUrl>
+    <Copyright>MIT</Copyright>
+    <RepositoryUrl>https://github.com/calico-crusade/valheim-serialization</RepositoryUrl>
+    <RepositoryType>GITHUB</RepositoryType>
+    <PackageTags>dotnet, valheim, serialization</PackageTags>
   </PropertyGroup>
 
 </Project>
