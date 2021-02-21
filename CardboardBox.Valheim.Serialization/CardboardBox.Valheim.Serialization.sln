@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardboardBox.Valheim.Serialization.ExampleCli", "CardboardBox.Valheim.Serialization.ExampleCli\CardboardBox.Valheim.Serialization.ExampleCli.csproj", "{DC1B6DF2-30AD-438D-A522-A1FE98369DF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardboardBox.Valheim.Serialization", "CardboardBox.Valheim.Serialization\CardboardBox.Valheim.Serialization.csproj", "{7D046AAA-62C9-4A6D-B5C3-DD86C3F81645}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC1B6DF2-30AD-438D-A522-A1FE98369DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1B6DF2-30AD-438D-A522-A1FE98369DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1B6DF2-30AD-438D-A522-A1FE98369DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1B6DF2-30AD-438D-A522-A1FE98369DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D046AAA-62C9-4A6D-B5C3-DD86C3F81645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D046AAA-62C9-4A6D-B5C3-DD86C3F81645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D046AAA-62C9-4A6D-B5C3-DD86C3F81645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D046AAA-62C9-4A6D-B5C3-DD86C3F81645}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FB9649B-956A-4014-94C9-657D6EE952BB}
+	EndGlobalSection
+EndGlobal
