@@ -24,32 +24,32 @@ namespace CardboardBox.Valheim.Serialization
 
 			character.KnownRecipes = ComplexSerializer
 				.ReadCollection<IndexedTuple<string>>(br)
-				.Select(t => t.Item1)
+				.FromIndexed()
 				.ToList();
 
 			character.KnownStations = ComplexSerializer
 				.ReadCollection<IndexedTuple<string, int>>(br)
-				.Select(t => (t.Item1, t.Item2))
+				.FromIndexed()
 				.ToList();
 
 			character.KnownMaterials = ComplexSerializer
 				.ReadCollection<IndexedTuple<string>>(br)
-				.Select(t => t.Item1)
+				.FromIndexed()
 				.ToList();
 
 			character.KnownTutorials = ComplexSerializer
 				.ReadCollection<IndexedTuple<string>>(br)
-				.Select(t => t.Item1)
+				.FromIndexed()
 				.ToList();
 
 			character.Uniques = ComplexSerializer
 				.ReadCollection<IndexedTuple<string>>(br)
-				.Select(t => t.Item1)
+				.FromIndexed()
 				.ToList();
 
 			character.Trophies = ComplexSerializer
 				.ReadCollection<IndexedTuple<string>>(br)
-				.Select(t => t.Item1)
+				.FromIndexed()
 				.ToList();
 
 			character.KnownBiomes = ComplexSerializer
@@ -59,7 +59,7 @@ namespace CardboardBox.Valheim.Serialization
 
 			character.KnownTexts = ComplexSerializer
 				.ReadCollection<IndexedTuple<string, string>>(br)
-				.Select(t => (t.Item1, t.Item2))
+				.FromIndexed()
 				.ToList();
 
 			character.Model = ComplexSerializer.Read<Look>(br);
@@ -123,12 +123,64 @@ namespace CardboardBox.Valheim.Serialization
 			return character;
 		}
 
+		public byte[] WritePlayerData(Character character)
+		{
+			using var ms = new MemoryStream();
+			using var bw = new BinaryWriter(ms);
+
+			ComplexSerializer.Write(bw, character.PlayerData);
+			ComplexSerializer.WriteCollection(bw, character.Inventory);
+			ComplexSerializer.WriteCollection(bw, character.KnownRecipes.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.KnownStations.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.KnownMaterials.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.KnownTutorials.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.Uniques.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.Trophies.ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.KnownBiomes.Select(t => (int)t).ToIndexed());
+			ComplexSerializer.WriteCollection(bw, character.KnownTexts.ToIndexed());
+
+			ComplexSerializer.Write(bw, character.Model);
+			ComplexSerializer.WriteCollection(bw, character.Food);
+
+			bw.Write(character.SkillVersion);
+			ComplexSerializer.WriteCollection(bw, character.Skills);
+
+			return ms.ToArray();
+		}
+
+		public byte[] WriteMapData(WorldData world)
+		{
+			using var ms = new MemoryStream();
+			using var bw = new BinaryWriter(ms);
+
+			if ((world.Explored?.GetLength(0) ?? 0) == 0 &&
+				(world.Pins?.Count ?? 0) == 0)
+				return null;
+
+			bw.Write(world.MapVersion);
+			int size = world.Explored.GetLength(0);
+			bw.Write(world.Explored.GetLength(0));
+
+			for (var x = 0; x < size; x++)
+				for (var y = 0; y < size; y++)
+					bw.Write(world.Explored[x, y]);
+
+			ComplexSerializer.WriteCollection(bw, world.Pins);
+			return ms.ToArray();
+		}
+
 		public override void Write(BinaryWriter writer, Character input)
 		{
 			ComplexSerializer.Write(writer, input.Statistics);
-			var worlds = input.WorldData.Values;
-			ComplexSerializer.WriteCollection(writer, worlds);
+			foreach(var (_, world) in input.WorldData)
+				world.MapData = WriteMapData(world);
+
+			ComplexSerializer.WriteCollection(writer, input.WorldData.Values);
 			ComplexSerializer.Write(writer, input);
+			writer.Write(true);
+
+			var data = WritePlayerData(input);
+			TypeSerializer.WriteBytes(writer, data);
 		}
 
 		public override void Write(Stream output, Character input)

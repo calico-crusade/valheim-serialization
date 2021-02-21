@@ -1,20 +1,25 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace CardboardBox.Valheim.Serialization.ExampleCli
 {
 	class Program
 	{
-		public static void Main(string[] args)
+		public static void Main()
 		{
-			var world = Serializer.Worlds.Read(
-				GetPath("World-Metadata.fwl"));
-			Console.WriteLine($"{world.Name} - {world.Seed}");
+			var worldPath = GetPath("World-Metadata.fwl");
 
-			var character = Serializer.Characters.Read(
-				GetPath("Character-Save.fch"));
+			//Deserialize the FWL file (This contains world meta-data)
+			var world = Serializer.Worlds.Read(worldPath);
+			//Serialize the FWL file
+			Serializer.Worlds.Write("test.fwl", world);
 
-			Console.WriteLine(character.Name);
+			var characterPath = GetPath("Character-Save.fch");
+
+			//Deserialize the FCH file (This contains the character profile)
+			var character = Serializer.Characters.Read(characterPath);
+			//Serialize the FCH file
+			Serializer.Characters.Write("test.fch", character);
+
 		}
 
 		public static string GetPath(string filename)

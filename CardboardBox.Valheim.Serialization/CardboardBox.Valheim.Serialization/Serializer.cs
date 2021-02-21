@@ -4,8 +4,8 @@ namespace CardboardBox.Valheim.Serialization
 {
 	public static class Serializer
 	{
-		public static WorldSerializer Worlds => new WorldSerializer();
+		public static IBaseSerializer<World> Worlds => new WorldSerializer();
 
-		public static CharacterSerializer Characters => new CharacterSerializer();
+		public static IBaseSerializer<Character> Characters => new CharacterSerializer();
 	}
 }
